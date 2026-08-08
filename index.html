@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demon Studio — Bedrock Mods, Addons &amp; Shaders</title>
+<link rel="icon" href="assets/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <a href="#top" class="brand">
+    <img src="assets/logo.jpg" alt="Demon Studio logo">
+    <span class="brand-name">DEMON <span>STUDIO</span></span>
+  </a>
+  <nav>
+    <div class="nav-links">
+      <a href="#library">Mods</a>
+      <a href="#library">Addons</a>
+      <a href="#library">Shaders</a>
+      <a href="#devices">Devices</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero" id="top">
+  <div class="eyebrow">Bedrock Edition · Cross-Platform</div>
+  <h1>One download,<br><em>every device</em> you play on.</h1>
+  <p>Mods, addons, shaders and texture packs for Minecraft Bedrock — packaged once and verified to run identically on mobile, console and desktop.</p>
+  <div class="hero-actions">
+    <a href="#library" class="btn btn-primary">Browse the library</a>
+    <a href="#devices" class="btn btn-ghost">Check device support</a>
+  </div>
+
+  <div class="device-strip" id="devices">
+    <div class="device-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 18h6"/></svg><span>Android</span></div>
+    <div class="device-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="18" r="1"/></svg><span>iOS</span></div>
+    <div class="device-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="2" y="4" width="20" height="13" rx="1"/><path d="M8 21h8M12 17v4"/></svg><span>Windows</span></div>
+  </div>
+</section>
+
+<section class="controls" id="library">
+  <div class="controls-row">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input id="search" type="text" placeholder="Search mods, addons, shaders…">
+    </div>
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-cat="all">All</button>
+      <button class="tab" data-cat="mod">Mods</button>
+      <button class="tab" data-cat="addon">Addons</button>
+      <button class="tab" data-cat="shader">Shaders</button>
+      <button class="tab" data-cat="texture">Texture Packs</button>
+    </div>
+  </div>
+  <div class="device-filters" id="deviceFilters"></div>
+  <div class="result-count" id="resultCount"></div>
+</section>
+
+<section class="grid" id="grid"></section>
+
+<footer>
+  <span class="brand-name" style="font-family:'Graduate';">DEMON <span style="color:var(--ember)">STUDIO</span></span>
+  <span>All packages built for Bedrock Engine 1.21+ · Verified on-device before listing</span>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
