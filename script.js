@@ -18,7 +18,7 @@ const devIcon = {
 // and paste the direct link here. Replace the placeholder URLs below with
 // your real ones.
 const MODS = [
-  {name:'Obsidian Forge', cat:'mod', desc:'Adds a smithing rework with 40 new alloy tools and armor tiers.', ver:'v3.2.1', size:'4.1 MB', color:'#3a2a26', devices:['android','ios','windows','xbox','playstation','switch'], link:'https://example.com/downloads/obsidian-forge.mcaddon'},
+  {name:'Obsidian Forge', cat:'mod', desc:'Adds a smithing rework with 40 new alloy tools and armor tiers.', ver:'v3.2.1', size:'4.1 MB', color:'#3a2a26', devices:['android','ios','windows','xbox','playstation','switch'], link:'https://github.com/DeepakChaisirOfficial/DEMON-STUDIO/blob/main/Actions%20and%20Stuff_1.5.mcpack'},
   {name:'Wraith Mobs', cat:'addon', desc:'Six new hostile entities with custom AI for the overworld and nether.', ver:'v1.8.0', size:'6.7 MB', color:'#2a1f33', devices:['android','windows','xbox','switch'], link:'https://example.com/downloads/wraith-mobs.mcaddon'},
   {name:'Ember Shaders', cat:'shader', desc:'Dynamic lighting, soft shadows and volumetric fog tuned for mobile GPUs.', ver:'v2.0.4', size:'2.3 MB', color:'#3a1f1a', devices:['android','ios','windows'], link:'https://example.com/downloads/ember-shaders.mcpack'},
   {name:'Hollowstone Pack', cat:'texture', desc:'A 32x gothic stone-and-iron texture overhaul for survival worlds.', ver:'v1.4.2', size:'9.4 MB', color:'#232326', devices:['android','ios','windows','xbox','playstation','switch'], link:'https://example.com/downloads/hollowstone-pack.mcpack'},
