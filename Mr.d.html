@@ -1,532 +1,161 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080808">
-<title>MR. D | Classified Identity</title>
-
+<meta name="theme-color" content="#050609">
+<title>Mr. D — A Story Unspoken</title>
 <style>
-:root {
-  --red: #ff1838;
-  --dark-red: #8b0018;
-  --bg: #080808;
-  --panel: #111113;
-  --text: #eeeeee;
-  --muted: #92929b;
-  --border: #29292d;
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; scroll-padding-top:80px; }
-body {
-  background:var(--bg);
-  color:var(--text);
-  font-family:Consolas,"Courier New",monospace;
-  overflow-x:hidden;
-}
-body::before {
-  content:"";
-  position:fixed; inset:0; z-index:-2;
-  background:
-    radial-gradient(ellipse at 50% 20%,#29000b 0%,transparent 45%),
-    linear-gradient(#080808,#0b080a);
-}
-#matrix {
-  position:fixed; inset:0; z-index:-1;
-  width:100%; height:100%; opacity:.14;
-  pointer-events:none;
-}
-a { color:inherit; text-decoration:none; }
-button { font:inherit; cursor:pointer; }
-::selection { background:var(--red); color:white; }
-.container { width:min(1100px,90%); margin:auto; }
-.red { color:var(--red); }
-.muted { color:var(--muted); }
-.tag {
-  display:inline-block;
-  color:var(--red);
-  border:1px solid #68101f;
-  background:#22070d;
-  padding:7px 11px;
-  font-size:11px;
-  letter-spacing:2px;
-}
-header {
-  position:fixed; top:0; width:100%; z-index:20;
-  background:#080808eF;
-  border-bottom:1px solid #242424;
-  backdrop-filter:blur(12px);
-}
-.nav {
-  min-height:66px; display:flex;
-  align-items:center; justify-content:space-between;
-  gap:16px;
-}
-.logo { font-size:21px; font-weight:bold; letter-spacing:2px; }
-.logo span { color:var(--red); }
-.navlinks { display:flex; gap:22px; align-items:center; }
-.navlinks a { font-size:12px; color:#bdbdc3; }
-.navlinks a:hover { color:var(--red); }
-.menu {
-  display:none; color:var(--red); background:none;
-  border:1px solid var(--border); padding:8px 12px;
-}
-.hero {
-  min-height:100svh;
-  display:flex; align-items:center;
-  padding:110px 0 70px;
-  position:relative;
-}
-.hero-content { max-width:780px; }
-.status {
-  color:#ff5269; font-size:12px;
-  letter-spacing:2px; margin:26px 0 15px;
-}
-.pulse {
-  display:inline-block; width:8px; height:8px;
-  border-radius:50%; background:var(--red);
-  box-shadow:0 0 12px var(--red);
-  margin-right:9px; animation:pulse 1.5s infinite;
-}
-@keyframes pulse { 50% { opacity:.25; } }
-h1 {
-  font-size:clamp(54px,11vw,110px);
-  line-height:.95; letter-spacing:-5px;
-}
-.glitch {
-  color:var(--red);
-  text-shadow:3px 0 #700018,-3px 0 #2500a0;
-  animation:flicker 5s infinite;
-}
-@keyframes flicker {
-  0%,94%,97%,100% { opacity:1; }
-  95%,96% { opacity:.65; }
-}
-.subtitle {
-  font-size:clamp(15px,2.5vw,21px);
-  color:#c0c0c6; margin-top:25px; line-height:1.8;
-}
-.hero-desc {
-  max-width:590px; color:var(--muted);
-  font-size:14px; line-height:1.9; margin:18px 0 28px;
-}
-.buttons { display:flex; flex-wrap:wrap; gap:12px; }
-.btn {
-  padding:13px 19px; border:1px solid var(--red);
-  background:var(--red); color:#fff;
-  font-size:12px; letter-spacing:1px;
-  display:inline-flex; align-items:center; justify-content:center;
-  transition:.2s;
-}
-.btn:hover { background:transparent; color:var(--red); }
-.btn.secondary { background:transparent; border-color:#45454a; }
-.btn.secondary:hover { border-color:var(--red); }
-.hero-meta {
-  margin-top:65px; display:flex; gap:28px; flex-wrap:wrap;
-  color:var(--muted); font-size:11px;
-}
-.hero-meta strong { color:white; display:block; font-size:20px; margin-bottom:6px; }
-section { padding:95px 0; border-top:1px solid #1b1b1e; }
-.section-head { margin-bottom:36px; }
-.kicker { color:var(--red); font-size:11px; letter-spacing:3px; margin-bottom:12px; }
-h2 { font-size:clamp(29px,6vw,45px); letter-spacing:-1.5px; }
-.section-desc { color:var(--muted); font-size:13px; line-height:1.8; margin-top:12px; max-width:600px; }
-.about-grid { display:grid; grid-template-columns:1.1fr .9fr; gap:25px; }
-.panel {
-  background:linear-gradient(135deg,#121214,#0b0b0d);
-  border:1px solid var(--border); padding:26px;
-}
-.panel h3 { font-size:17px; margin-bottom:17px; }
-.panel p { color:var(--muted); font-size:13px; line-height:2; }
-.profile-line {
-  display:flex; justify-content:space-between; gap:15px;
-  border-bottom:1px solid #242427; padding:13px 0; font-size:12px;
-}
-.profile-line:last-child { border-bottom:0; }
-.profile-line span:first-child { color:var(--muted); }
-.profile-line span:last-child { text-align:right; }
-.cards { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; }
-.card {
-  background:#0e0e10; border:1px solid var(--border);
-  padding:24px; transition:.25s; min-width:0;
-}
-.card:hover { border-color:var(--red); transform:translateY(-4px); }
-.card-icon { font-size:27px; margin-bottom:19px; }
-.card h3 { font-size:17px; margin-bottom:12px; }
-.card p { font-size:12px; color:var(--muted); line-height:1.9; }
-.card .number { font-size:10px; color:var(--red); margin-bottom:18px; letter-spacing:2px; }
-.skills { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
-.skill { margin-bottom:21px; }
-.skill-top { display:flex; justify-content:space-between; font-size:12px; margin-bottom:10px; }
-.skill-top span:last-child { color:var(--red); }
-.track { height:5px; background:#27272a; }
-.track div { height:100%; background:var(--red); width:0; transition:width 1.2s ease; }
-.terminal {
-  background:#050506; border:1px solid #38383c;
-  overflow:hidden; box-shadow:0 15px 50px #0008;
-}
-.term-head {
-  padding:13px 17px; background:#141416;
-  display:flex; justify-content:space-between;
-  border-bottom:1px solid #303034; font-size:11px;
-}
-.dots { color:var(--red); letter-spacing:4px; }
-.term-body { padding:20px; min-height:250px; font-size:12px; line-height:2; }
-.term-line { overflow-wrap:anywhere; }
-.prompt { color:var(--red); }
-#termOutput { white-space:pre-wrap; color:#bdbdc5; }
-.term-form { display:flex; gap:8px; margin-top:15px; }
-.term-form span { color:var(--red); padding-top:9px; }
-.term-form input {
-  flex:1; min-width:0; background:transparent;
-  border:0; outline:none; color:white; font:inherit;
-}
-.term-form button {
-  background:transparent; border:1px solid #444;
-  color:var(--red); padding:7px 10px;
-}
-.command-help { color:#777; font-size:10px; margin-top:13px; }
-.quote {
-  text-align:center; padding:45px 20px;
-  border:1px solid #43101a;
-  background:linear-gradient(120deg,#14070a,#0b0b0d);
-}
-.quote blockquote { font-size:clamp(20px,4vw,32px); line-height:1.6; }
-.quote p { color:var(--red); font-size:11px; margin-top:20px; letter-spacing:2px; }
-.contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:25px; }
-.contact-item {
-  padding:17px 0; border-bottom:1px solid #29292d;
-  font-size:12px; color:var(--muted);
-}
-.contact-item strong { color:white; display:block; margin-bottom:7px; }
-.contact-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:20px; }
-footer {
-  border-top:1px solid var(--border); padding:25px 0;
-  color:#777; font-size:10px; line-height:2;
-}
-.footer-inner { display:flex; justify-content:space-between; gap:15px; flex-wrap:wrap; }
-.backtop { color:var(--red); }
-.toast {
-  position:fixed; bottom:20px; left:50%;
-  transform:translate(-50%,20px); opacity:0;
-  background:#171719; border:1px solid var(--red);
-  padding:12px 18px; font-size:12px; z-index:50;
-  transition:.25s; pointer-events:none; text-align:center;
-  max-width:90%;
-}
-.toast.show { opacity:1; transform:translate(-50%,0); }
-.reveal { opacity:0; transform:translateY(20px); transition:.65s; }
-.reveal.visible { opacity:1; transform:translateY(0); }
-
-@media(max-width:700px) {
-  .nav { min-height:60px; }
-  .menu { display:block; }
-  .navlinks {
-    display:none; position:absolute; top:60px; left:0; width:100%;
-    background:#0b0b0c; padding:20px 5%;
-    border-bottom:1px solid var(--border);
-    flex-direction:column; align-items:flex-start; gap:20px;
-  }
-  .navlinks.open { display:flex; }
-  h1 { letter-spacing:-3px; }
-  .about-grid,.contact-grid,.skills { grid-template-columns:1fr; }
-  .cards { grid-template-columns:1fr; }
-  section { padding:70px 0; }
-  .hero-meta { margin-top:42px; gap:22px; }
-  .panel { padding:20px; }
-  .term-body { padding:15px; }
-}
-@media(prefers-reduced-motion:reduce) {
-  *,*::before,*::after { scroll-behavior:auto!important; animation:none!important; transition:none!important; }
-  .reveal { opacity:1; transform:none; }
-}
+:root{--bg:#050609;--panel:#090d14;--line:#1a2533;--red:#ff2444;--blue:#19a9ff;--muted:#a9b8cc;--white:#edf4ff;--green:#26e7a4}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--white);font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif}button,a{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+.topbar{height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 4.5%;border-bottom:1px solid #17202d;background:#050609;position:sticky;top:0;z-index:10}.brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:1px;font-size:27px}.brand b{color:var(--red)}.brand-mark{width:42px;height:42px;border:1px solid #46536a;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 50% 35%,#344052,#050609 65%);font-size:23px}.nav{display:flex;gap:22px}.nav a{color:#c8d3e4;text-decoration:none;font-size:14px;padding:24px 3px}.nav a:hover{color:var(--red)}.nav a.active{color:var(--red);border-bottom:3px solid var(--red)}
+/* First screen: private, unspoken love story */
+.love-screen{min-height:calc(100vh - 68px);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:50px 20px;background:radial-gradient(ellipse at 75% 40%,#10172b 0,#070911 40%,#030405 75%)}.love-screen:before,.love-screen:after{content:"";position:absolute;border-radius:50%;filter:blur(2px);pointer-events:none}.love-screen:before{width:350px;height:350px;background:#f7193b12;top:10%;left:-180px}.love-screen:after{width:450px;height:450px;background:#007bff10;right:-220px;bottom:-180px}
+.love-layout{width:min(1040px,100%);display:grid;grid-template-columns:1fr .8fr;align-items:center;gap:40px;position:relative;z-index:1}.eyebrow{color:var(--red);letter-spacing:4px;text-transform:uppercase;font-size:12px;font-weight:800}.love-copy h1{font-size:clamp(42px,7vw,78px);line-height:.98;margin:18px 0 20px;letter-spacing:-3px}.love-copy h1 span{color:var(--red);font-family:Georgia,serif;font-style:italic}.love-copy .sub{color:#b9c6d9;font-size:17px;line-height:1.8;max-width:540px}.secret{margin-top:25px;padding:18px 20px;border-left:3px solid var(--red);background:linear-gradient(90deg,#ff23440d,transparent);color:#d8e0ed;line-height:1.8;max-width:540px}.secret em{color:#fff}.small-note{font-size:12px;color:#75859b;margin-top:22px}
+.avatar-wrap{display:grid;place-items:center;min-height:360px;position:relative}.avatar-ring{width:min(310px,75vw);aspect-ratio:1;border-radius:50%;border:2px solid var(--red);box-shadow:0 0 25px #ff18352b,inset 0 0 30px #0a1a2b;display:grid;place-items:center;position:relative;background:radial-gradient(circle,#121b2a 0,#07090e 65%)}.avatar-ring:before{content:"";position:absolute;inset:12px;border:1px solid #1b6dba66;border-radius:50%}.hood{width:68%;height:82%;position:relative;overflow:hidden;clip-path:polygon(50% 0,80% 16%,100% 55%,87% 100%,13% 100%,0 55%,20% 16%);background:linear-gradient(120deg,#1b2638,#030508 42%,#172438 75%,#020307);filter:drop-shadow(0 0 20px #000)}.hood:before{content:"";position:absolute;inset:13% 14% 4%;border-radius:48% 48% 18% 18%;background:linear-gradient(120deg,#05070b,#101a2a 45%,#010204 80%);border:1px solid #344359}.face{position:absolute;left:29%;right:29%;top:34%;height:32%;background:#020307;border-radius:45% 45% 35% 35%;box-shadow:0 0 20px #000}.face:before{content:"";position:absolute;left:8%;top:25%;width:32%;height:5px;background:var(--red);transform:rotate(18deg);box-shadow:0 0 12px var(--red)}.face:after{content:"";position:absolute;right:8%;top:25%;width:32%;height:5px;background:var(--blue);transform:rotate(-18deg);box-shadow:0 0 12px var(--blue)}.avatar-label{position:absolute;bottom:-22px;background:#07090e;padding:5px 20px;font:italic 26px Georgia,serif}.avatar-label b{color:var(--red)}.version-launch{margin-top:32px;display:inline-flex;align-items:center;gap:12px;border:1px solid #ff244477;background:#10070c;color:#fff;padding:14px 20px;border-radius:5px;font-weight:800;letter-spacing:1px;box-shadow:0 0 20px #ff244415;transition:.2s}.version-launch:hover{background:var(--red);transform:translateY(-2px)}.version-launch span{color:var(--red)}.version-launch:hover span{color:#fff}
+#portfolio{animation:appear .7s ease}@keyframes appear{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.hero{min-height:390px;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:25px;padding:36px 6%;border-bottom:1px solid var(--line);background:radial-gradient(ellipse at 76% 40%,#071c45 0,#080914 34%,#030405 74%);position:relative;overflow:hidden}.hero:after{content:"";position:absolute;right:5%;top:12%;width:35%;height:80%;background:radial-gradient(ellipse,#12244b66,transparent 70%);pointer-events:none}.hero-copy,.hero-art{position:relative;z-index:1}.script{font:italic 32px Georgia,serif;color:#e6edf7}.hero h2{font-size:clamp(65px,9vw,105px);line-height:.9;margin:12px 0;color:#f2f6ff;font-weight:950;letter-spacing:-5px}.hero h2 span{color:var(--red);font-style:italic}.hero .tagline{letter-spacing:2px;color:#c7d7ec}.red-rule{height:3px;width:48px;background:var(--red);margin:20px 0}.traits{line-height:2;color:#cbd6e5}.traits b{color:var(--red);padding:0 8px}.quote-mini{font-style:italic;color:#c3d1e4;margin-top:20px;line-height:1.6}.hero-art{min-height:315px;display:flex;align-items:flex-end;justify-content:center}.big-hood{height:300px;width:260px;position:relative;background:linear-gradient(115deg,#071225,#101b33 45%,#02040a 70%);clip-path:polygon(50% 0,78% 13%,97% 37%,100% 100%,0 100%,3% 37%,22% 13%);filter:drop-shadow(0 0 22px #147aff33)}.big-hood:before{content:"";position:absolute;top:19%;left:23%;width:54%;height:43%;background:#02040a;border-radius:48% 48% 42% 42%;border:1px solid #293952}.big-hood:after{content:"";position:absolute;top:39%;left:34%;width:12%;height:5px;background:var(--red);box-shadow:0 0 13px var(--red),40px 0 0 var(--blue),40px 0 14px var(--blue);transform:rotate(12deg)}
+.section{padding:26px 3%;border-bottom:1px solid var(--line)}.section-title{display:flex;align-items:center;gap:12px;font-size:20px;margin:0 0 18px}.section-title .sym{color:var(--red);font-size:26px}.about-grid{display:grid;grid-template-columns:180px 1.1fr 1fr;gap:26px;align-items:center}.mini-avatar{width:150px;height:150px;border:2px solid var(--red);border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#17243a,#020307 70%);box-shadow:0 0 18px #ff24441e}.mini-avatar .hood{height:115px;width:95px}.about-text{color:#b8c8dc;line-height:1.65;font-size:14px}.about-text h3{color:#eaf2ff;margin:0 0 8px;font-size:20px}.quote-card{background:linear-gradient(130deg,#101a2a,#07090f);padding:28px;border-left:2px solid #20334c;transform:skew(-2deg);font:italic 23px Georgia,serif;line-height:1.5;color:#e4ecfa}.quote-card span{display:block;text-align:right;color:var(--red);font-weight:bold;font-size:18px}
+.cards{display:grid;grid-template-columns:repeat(7,minmax(100px,1fr));gap:10px}.interest{border:1px solid var(--line);background:linear-gradient(145deg,#080d15,#05070b);border-radius:9px;padding:15px 9px;text-align:center;min-height:150px}.interest .ico{font-size:34px;color:var(--accent);margin-bottom:10px}.interest h4{margin:0 0 8px;font-size:14px}.interest p{font-size:12px;line-height:1.45;color:#a9b9ce;margin:0}
+.lower-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:20px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.stat,.project{border:1px solid var(--line);background:#080c12;border-radius:8px;padding:14px 8px;text-align:center}.stat .ico{font-size:26px;color:var(--accent)}.stat strong{display:block;color:var(--accent);font-size:21px;margin:4px 0}.stat small{font-size:11px;color:#b2c0d2}.projects{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.project{padding:0;overflow:hidden;text-align:left}.project-art{height:75px;display:grid;place-items:center;font-size:32px;background:linear-gradient(135deg,#10274b,#170b23 60%,#05070c)}.project:nth-child(2) .project-art{background:linear-gradient(135deg,#06141c,#14263a)}.project:nth-child(3) .project-art{background:linear-gradient(135deg,#210b31,#071c3c)}.project:nth-child(4) .project-art{background:linear-gradient(135deg,#101827,#030406)}.project div:last-child{padding:9px;font-size:12px}.project small{display:block;color:#899bb3;margin-top:3px;font-size:10px}.footer{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 4%;color:#8495ad;font-size:12px}.footer-center{text-align:center;font:italic 17px Georgia,serif;color:#d9e3f2}.footer-center b{display:block;color:var(--red);font-size:25px;margin-top:4px}.social{display:flex;gap:12px;font-size:18px}.social a{color:#91a8c7;text-decoration:none}.social a:hover{color:var(--red)}.back-love{display:block;margin:0 auto 25px;background:transparent;color:#7f90a8;border:1px solid #263244;padding:9px 14px;border-radius:4px}.back-love:hover{color:white;border-color:var(--red)}
+@media(max-width:800px){.topbar{padding:0 15px}.nav{gap:10px}.nav a{font-size:0;padding:23px 4px}.nav a:before{font-size:18px}.nav a:nth-child(1):before{content:"⌂"}.nav a:nth-child(2):before{content:"♙"}.nav a:nth-child(3):before{content:"</>"}.nav a:nth-child(4):before{content:"▣"}.nav a:nth-child(5):before{content:"▧"}.nav a:nth-child(6):before{content:"✉"}.love-layout{grid-template-columns:1fr;gap:25px;text-align:center}.love-copy .sub,.secret{margin-left:auto;margin-right:auto}.avatar-wrap{min-height:290px;grid-row:1}.avatar-ring{width:230px}.love-copy h1{letter-spacing:-2px}.hero{grid-template-columns:1fr;padding:30px 6%;text-align:center}.hero-copy .red-rule{margin:18px auto}.hero-art{min-height:210px}.big-hood{height:205px;width:190px}.about-grid{grid-template-columns:1fr;text-align:center}.mini-avatar{margin:auto}.quote-card{font-size:20px}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.lower-grid{grid-template-columns:1fr}.projects{grid-template-columns:repeat(2,1fr)}.footer{flex-wrap:wrap;justify-content:center;text-align:center}.footer-center{order:-1;width:100%}}
+@media(min-width:500px) and (max-width:800px){.cards{grid-template-columns:repeat(4,minmax(0,1fr))}.cards .interest:last-child{grid-column:span 2}.stats{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:380px){.brand{font-size:21px}.brand-mark{width:34px;height:34px}.stats{grid-template-columns:repeat(2,1fr)}.love-copy h1{font-size:43px}.secret{font-size:14px}.traits{font-size:13px}}
 </style>
 </head>
-
 <body>
-<canvas id="matrix"></canvas>
-
-<header>
-  <div class="container nav">
-    <a class="logo" href="#home">MR<span>.</span> D</a>
-    <button class="menu" id="menuBtn" aria-label="Toggle navigation" aria-expanded="false">☰ MENU</button>
-    <nav class="navlinks" id="navlinks">
-      <a href="#home">HOME</a>
-      <a href="#about">IDENTITY</a>
-      <a href="#skills">SKILLS</a>
-      <a href="#projects">PROJECTS</a>
-      <a href="#terminal">TERMINAL</a>
-      <a href="#contact">CONTACT</a>
-    </nav>
-  </div>
+<header class="topbar">
+  <div class="brand"><span class="brand-mark">◉</span><span><b>MR.</b> D</span></div>
+  <nav class="nav" aria-label="Main navigation">
+    <a href="#home" class="active">Home</a><a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#gallery">Gallery</a><a href="#contact">Contact</a>
+  </nav>
 </header>
 
 <main>
-<section class="hero" id="home">
-  <div class="container hero-content">
-    <span class="tag">CLASSIFIED // PERSONAL ARCHIVE</span>
-    <div class="status"><span class="pulse"></span> SYSTEM ONLINE // IDENTITY UNKNOWN</div>
-    <h1>MR.<br><span class="glitch">D</span><span style="color:#555">_</span></h1>
-    <p class="subtitle">Lover by heart. Gamer by instinct.<br>Developer by passion. <span class="red">Mysterious by nature.</span></p>
-    <p class="hero-desc">
-      Behind every line of code, there is a story.
-      Behind every game, a new world.
-      And behind this identity, a mind that never stops exploring.
-      Welcome to my digital world.
-    </p>
-    <div class="buttons">
-      <a class="btn" href="#about">ACCESS MY WORLD ↗</a>
-      <a class="btn secondary" href="#projects">EXPLORE PROJECTS</a>
+<section id="loveHome" class="love-screen">
+  <div class="love-layout">
+    <div class="love-copy">
+      <div class="eyebrow">A private story • Mr. D</div>
+      <h1>Some feelings<br>stay <span>unspoken.</span></h1>
+      <p class="sub">Behind the black hoodie is someone who can write code, build worlds, and solve problems… but still can't find the courage to tell one person how much they mean to him.</p>
+      <div class="secret">“I fell for my friend quietly. I care about her more than I know how to explain, but I'm scared that saying it out loud could change everything. So for now, <em>my heart keeps a secret my words can't tell.</em>”</div>
+      <p class="small-note">A one-sided love story. No names. No pressure. Just feelings.</p>
+      <button class="version-launch" id="openVersion" type="button">ENTER MY WORLD <span>v.2.0 ↗</span></button>
     </div>
-    <div class="hero-meta">
-      <div><strong>01<span class="red">.</span></strong> ONE IDENTITY</div>
-      <div><strong>∞</strong> CURIOSITY</div>
-      <div><strong>24/7</strong> IN DEV MODE</div>
+    <div class="avatar-wrap" aria-label="Illustration of a mysterious person in a black hoodie with face hidden">
+      <div class="avatar-ring"><div class="hood"><div class="face"></div></div><div class="avatar-label">Mr. <b>D</b></div></div>
     </div>
   </div>
 </section>
 
-<section id="about">
-  <div class="container">
-    <div class="section-head reveal">
-      <p class="kicker">// 01 — THE UNKNOWN</p>
-      <h2>Who is <span class="red">Mr. D?</span></h2>
-      <p class="section-desc">Some things are better discovered than explained.</p>
+<div id="portfolio" class="hidden">
+  <section id="home" class="hero">
+    <div class="hero-copy">
+      <div class="script">Hello, I'm</div>
+      <h2>Mr. <span>D</span></h2>
+      <div class="tagline">A Mysterious Soul... With Many Faces</div>
+      <div class="red-rule"></div>
+      <div class="traits">Lover <b>•</b> Gamer <b>•</b> Game Developer <b>•</b> Coder<br>Ethical Hacker <b>•</b> Dreamer <b>•</b> Creator <b>•</b> And More...</div>
+      <div class="quote-mini">“Not just a person,<br>but a story still being written...”</div>
     </div>
+    <div class="hero-art"><div class="big-hood" aria-label="Hooded mysterious silhouette"></div></div>
+  </section>
+
+  <section id="about" class="section">
     <div class="about-grid">
-      <div class="panel reveal">
-        <h3><span class="red">[</span> PERSONAL FILE <span class="red">]</span></h3>
-        <p>
-          A curious mind with a passion for technology, gaming, software,
-          and the art of building things from nothing.
-          A romantic heart that believes some feelings don't need an audience.
-          A gamer who sees every challenge as another level to conquer.
-          A coder who turns imagination into something real.
-          <br><br>
-          I don't need to reveal everything to leave an impression.
-          Let the work speak. Let the mystery remain.
-        </p>
+      <div class="mini-avatar"><div class="hood"><div class="face"></div></div></div>
+      <div class="about-text"><h3><span style="color:var(--red)">♧</span> About Mr. D</h3>
+        I am Mr. D — a mysterious person with a passion for technology, creativity and freedom. I love exploring new worlds, building games, writing code, finding system weaknesses ethically, and living life on my own terms.<br>
+        I enjoy gaming, game development, coding, ethical hacking, and most of all... I love creating things that make an impact. Simple life. Big dreams.
       </div>
-      <div class="panel reveal">
-        <h3>IDENTITY RECORD</h3>
-        <div class="profile-line"><span>CODENAME</span><span class="red">MR. D</span></div>
-        <div class="profile-line"><span>CLASS</span><span>Developer / Gamer</span></div>
-        <div class="profile-line"><span>INTEREST</span><span>Technology & Games</span></div>
-        <div class="profile-line"><span>SECURITY</span><span>Ethical Hacking</span></div>
-        <div class="profile-line"><span>PERSONALITY</span><span>Quiet / Curious</span></div>
-        <div class="profile-line"><span>STATUS</span><span class="red">UNDEFINED</span></div>
-        <div class="profile-line"><span>MOTTO</span><span>Build. Learn. Repeat.</span></div>
-      </div>
+      <div class="quote-card">“I don't follow the crowd,<br>I create my own path...<span>— Mr. D</span></div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="skills">
-  <div class="container">
-    <div class="section-head reveal">
-      <p class="kicker">// 02 — THE ARSENAL</p>
-      <h2>Skills & <span class="red">Interests</span></h2>
-      <p class="section-desc">The tools, ideas, and disciplines that make up my digital universe.</p>
-    </div>
-    <div class="skills">
-      <div class="panel reveal">
-        <h3>TECHNICAL ARSENAL</h3>
-        <div class="skill">
-          <div class="skill-top"><span>PROGRAMMING</span><span>LEARNING</span></div>
-          <div class="track"><div data-width="78%"></div></div>
-        </div>
-        <div class="skill">
-          <div class="skill-top"><span>WEB DEVELOPMENT</span><span>LEARNING</span></div>
-          <div class="track"><div data-width="85%"></div></div>
-        </div>
-        <div class="skill">
-          <div class="skill-top"><span>GAME DEVELOPMENT</span><span>BUILDING</span></div>
-          <div class="track"><div data-width="65%"></div></div>
-        </div>
-        <div class="skill">
-          <div class="skill-top"><span>ETHICAL HACKING</span><span>EXPLORING</span></div>
-          <div class="track"><div data-width="55%"></div></div>
-        </div>
-        <p class="muted" style="font-size:10px;line-height:1.8">
-          Illustrative website values only. These are not verified test results or certifications.
-        </p>
-      </div>
-      <div class="panel reveal">
-        <h3>OPERATING PRINCIPLES</h3>
-        <div class="profile-line"><span>01</span><span>Think before executing.</span></div>
-        <div class="profile-line"><span>02</span><span>Build instead of copying.</span></div>
-        <div class="profile-line"><span>03</span><span>Test, debug, improve.</span></div>
-        <div class="profile-line"><span>04</span><span>Respect digital privacy.</span></div>
-        <div class="profile-line"><span>05</span><span>Hack ethically and legally.</span></div>
-        <div class="profile-line"><span>06</span><span>Never stop learning.</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="projects">
-  <div class="container">
-    <div class="section-head reveal">
-      <p class="kicker">// 03 — THE UNIVERSE</p>
-      <h2>My <span class="red">Worlds</span></h2>
-      <p class="section-desc">Different passions. One curious mind.</p>
-    </div>
+  <section id="skills" class="section">
+    <h3 class="section-title"><span class="sym">♡</span> What I Love &amp; Do</h3>
     <div class="cards">
-      <article class="card reveal">
-        <div class="number">PROJECT_001</div>
-        <div class="card-icon">🎮</div>
-        <h3>Gaming Universe</h3>
-        <p>Exploring virtual worlds, mastering challenges, and finding inspiration in game mechanics and immersive experiences.</p>
-      </article>
-      <article class="card reveal">
-        <div class="number">PROJECT_002</div>
-        <div class="card-icon">⌨️</div>
-        <h3>Code Laboratory</h3>
-        <p>Creating websites, experimenting with scripts, solving problems, and transforming ideas into working digital projects.</p>
-      </article>
-      <article class="card reveal">
-        <div class="number">PROJECT_003</div>
-        <div class="card-icon">🕹️</div>
-        <h3>Game Development</h3>
-        <p>Designing mechanics, imagining characters, developing game concepts, and building interactive experiences.</p>
-      </article>
-      <article class="card reveal">
-        <div class="number">PROJECT_004</div>
-        <div class="card-icon">🛡️</div>
-        <h3>Cyber Security</h3>
-        <p>Learning defensive security, understanding vulnerabilities, practicing in authorized labs, and protecting digital systems.</p>
-      </article>
-      <article class="card reveal">
-        <div class="number">PROJECT_005</div>
-        <div class="card-icon">🖤</div>
-        <h3>Private Feelings</h3>
-        <p>Not every story belongs online. Some feelings, memories, and promises are kept away from the public eye.</p>
-      </article>
-      <article class="card reveal">
-        <div class="number">PROJECT_006</div>
-        <div class="card-icon">⚡</div>
-        <h3>Future Experiments</h3>
-        <p>New ideas, new tools, and new challenges. The next project is always one thought away.</p>
-      </article>
+      <div class="interest" style="--accent:#ff3150"><div class="ico">♡</div><h4>Lover</h4><p>Real love isn't just for people, it's for life, freedom and dreams.</p></div>
+      <div class="interest" style="--accent:#8b55ff"><div class="ico">♧</div><h4>Gamer</h4><p>Good games,<br>good vibes,<br>better life.</p></div>
+      <div class="interest" style="--accent:#45f77c"><div class="ico">🎮</div><h4>Game Developer</h4><p>Turning ideas into interactive worlds.</p></div>
+      <div class="interest" style="--accent:#1caeff"><div class="ico">&lt;/&gt;</div><h4>Coder</h4><p>Clean code. Better solutions. Endless possibilities.</p></div>
+      <div class="interest" style="--accent:#13d8e8"><div class="ico">♙</div><h4>Ethical Hacker</h4><p>Find flaws. Fix problems. Make the internet safer.</p></div>
+      <div class="interest" style="--accent:#ffd34b"><div class="ico">♧</div><h4>Creator</h4><p>Ideas → Code → Reality.</p></div>
+      <div class="interest" style="--accent:#e34ae9"><div class="ico">△</div><h4>Dreamer</h4><p>Big dreams,<br>no limits.</p></div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="terminal">
-  <div class="container">
-    <div class="section-head reveal">
-      <p class="kicker">// 04 — RESTRICTED ACCESS</p>
-      <h2>The <span class="red">Terminal</span></h2>
-      <p class="section-desc">Enter a command to explore this fictional profile terminal.</p>
-    </div>
-    <div class="terminal reveal">
-      <div class="term-head">
-        <span>mr-d@unknown:~</span>
-        <span class="dots">● ● ●</span>
+  <section class="section lower-grid">
+    <div>
+      <h3 class="section-title"><span class="sym">▥</span> My Stats</h3>
+      <div class="stats">
+        <div class="stat" style="--accent:#a45dff"><div class="ico">🎮</div><strong>100+</strong><small>Games Played</small></div>
+        <div class="stat" style="--accent:#1caeff"><div class="ico">&lt;/&gt;</div><strong>50+</strong><small>Projects Built</small></div>
+        <div class="stat" style="--accent:#24e5a0"><div class="ico">⬡</div><strong>20+</strong><small>Security Tools</small></div>
+        <div class="stat" style="--accent:#ffca45"><div class="ico">☕</div><strong>1000+</strong><small>Hours Coded</small></div>
       </div>
-      <div class="term-body">
-        <div class="term-line"><span class="prompt">root@mr-d:~$</span> initiate_profile</div>
-        <div id="termOutput">Welcome to the Mr. D interactive terminal.
-This is a local website simulation, not a real system shell.
-Type "help" to see available commands.</div>
-        <form class="term-form" id="termForm">
-          <span>mr-d $</span>
-          <input id="termInput" type="text" placeholder="Enter command..." autocomplete="off" aria-label="Terminal command">
-          <button type="submit">RUN ↵</button>
-        </form>
-        <p class="command-help">AVAILABLE: help / whoami / skills / projects / status / clear / date</p>
+      <p style="text-align:center;color:#8092a9;font-size:11px">∞ &nbsp; Still Counting... <span style="color:#60718a">(sample stats — edit these to match you)</span></p>
+    </div>
+    <div id="projects">
+      <h3 class="section-title"><span class="sym">▱</span> My Projects <small style="font-size:12px;color:#a6b6ca;font-weight:400">(Some of Them)</small></h3>
+      <div class="projects">
+        <div class="project"><div class="project-art">🕹️</div><div>Game Projects<small>2D / 3D Games</small></div></div>
+        <div class="project"><div class="project-art">⌨️</div><div>Web Tools<small>Useful Web Apps</small></div></div>
+        <div class="project"><div class="project-art">🛡️</div><div>Security Tools<small>Learning &amp; Testing</small></div></div>
+        <div class="project"><div class="project-art">◉</div><div>More...<small>Coming Soon</small></div></div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section>
-  <div class="container">
-    <div class="quote reveal">
-      <span class="kicker">// PERSONAL PHILOSOPHY</span>
-      <blockquote>
-        "Not every shadow hides a secret.<br>
-        Sometimes, it protects a <span class="red">dream.</span>"
-      </blockquote>
-      <p>— MR. D / UNKNOWN IDENTITY</p>
+  <section id="gallery" class="section" style="text-align:center">
+    <h3 class="section-title" style="justify-content:center"><span class="sym">▧</span> Gallery</h3>
+    <p style="color:#9bacc2">A few roles. One person. A thousand stories still loading.</p>
+    <div class="cards" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr));max-width:800px;margin:auto">
+      <div class="interest"><div class="ico" style="color:#ff3150">☾</div><h4>The Lover</h4><p>Words left unsaid.</p></div>
+      <div class="interest"><div class="ico" style="color:#168eff">⌨</div><h4>The Coder</h4><p>Building after midnight.</p></div>
+      <div class="interest"><div class="ico" style="color:#a45dff">🎮</div><h4>The Gamer</h4><p>Another world to explore.</p></div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="contact">
-  <div class="container">
-    <div class="section-head reveal">
-      <p class="kicker">// 05 — OPEN CHANNEL</p>
-      <h2>Make <span class="red">Contact</span></h2>
-      <p class="section-desc">Every connection starts with a message. Add your real contact details below to make this section yours.</p>
-    </div>
-    <div class="contact-grid">
-      <div class="panel reveal">
-        <h3>ESTABLISH CONNECTION</h3>
-        <p>Interested in coding, gaming, game development, or ethical cybersecurity? Reach out through a channel you choose to publish.</p>
-        <div class="contact-actions">
-          <button class="btn" id="emailBtn">COPY EMAIL</button>
-          <button class="btn secondary" id="shareBtn">SHARE WEBSITE</button>
-        </div>
-      </div>
-      <div class="panel reveal">
-        <h3>PUBLIC CHANNELS</h3>
-        <div class="contact-item">
-          <strong>EMAIL</strong>
-          <span id="emailText">your-email@example.com</span>
-        </div>
-        <div class="contact-item">
-          <strong>GITHUB</strong>
-          <span>github.com/your-username</span>
-        </div>
-        <div class="contact-item">
-          <strong>INSTAGRAM</strong>
-          <span>@your-username</span>
-        </div>
-        <p style="font-size:10px;margin-top:15px">Example details only. Replace them with your own public profiles before publishing.</p>
-      </div>
-    </div>
-  </div>
-</section>
+  <footer id="contact" class="footer">
+    <div>&gt; Life.exe | Loading... ▰▰▰</div>
+    <div class="footer-center">Same Person... Different Roles...<b>Still Mr. D</b></div>
+    <div>Stay Anonymous...<div class="social"><a href="#contact" aria-label="Discord">◉</a><a href="#contact" aria-label="GitHub">⌘</a><a href="#contact" aria-label="YouTube">▶</a><a href="#contact" aria-label="X">𝕏</a></div></div>
+  </footer>
+  <button class="back-love" id="backToLove" type="button">← Return to the hidden story</button>
+</div>
 </main>
-
-<footer>
-  <div class="container footer-inner">
-    <div>© <span id="year"></span> MR. D — ALL RIGHTS RESERVED.</div>
-    <div>DESIGNED IN THE SHADOWS <span class="red">//</span> BUILT WITH CODE</div>
-    <a href="#home" class="backtop">BACK TO TOP ↑</a>
-  </div>
-</footer>
-
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
-
 <script>
-/* ==================================
-   MR. D - SINGLE FILE WEBSITE
-   All effects run locally in browser.
-================================== */
-
-const $ = id => document.getElementById(id);
-
-$("year").textContent = new Date().getFullYear();
-
-/* Mobile navigation */
-$("menuBtn").addEventListener("click", () => {
-  const open = $("navlinks").classList.toggle("open");
-  $("menuBtn").setAttribute("aria-expanded", String(open));
-  $("menuBtn").textContent = open ? "✕ CLOSE" : "☰ MENU";
-});
-
-document.querySelectorAll(".navlinks a").forEach(link => {
-  link.addEventListener("click", () => {
-    $("navlinks").classList.remove("open");
-    $("menuBtn").setAttribute("aria-expanded", "false");
-    $("menuBtn").textContent = "☰ MENU";
+(() => {
+  const love = document.getElementById('loveHome');
+  const portfolio = document.getElementById('portfolio');
+  const open = document.getElementById('openVersion');
+  const back = document.getElementById('backToLove');
+  function showPortfolio(){
+    love.classList.add('hidden');
+    portfolio.classList.remove('hidden');
+    window.scrollTo({top:0,behavior:'smooth'});
+    document.title='Mr. D — v.2.0';
+  }
+  function showLove(){
+    portfolio.classList.add('hidden');
+    love.classList.remove('hidden');
+    window.scrollTo({top:0,behavior:'smooth'});
+    document.title='Mr. D — A Story Unspoken';
+  }
+  open.addEventListener('click',showPortfolio);
+  back.addEventListener('click',showLove);
+  document.querySelectorAll('.nav a').forEach(link=>{
+    link.addEventListener('click',event=>{
+      const target=link.getAttribute('href');
+      if(target==='#home' || target==='#about' || target==='#skills' || target==='#projects' || target==='#gallery' || target==='#contact'){
+        if(portfolio.classList.contains('hidden')){event.preventDefault();showPortfolio();setTimeout(()=>document.querySelector(target)?.scrollIntoView({behavior:'smooth'}),100);}
+        document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
   });
-});
-
-/* Toast notifications */
-let toastTimer;
-function toast(message) {
-  $("toast").te
+})();
+</script>
+</body>
+</html>
