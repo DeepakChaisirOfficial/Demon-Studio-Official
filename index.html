@@ -1,76 +1,226 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Demon Studio — Bedrock Mods, Addons &amp; Shaders</title>
-<link rel="icon" href="logo.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DemonStore — App Store</title>
+<style>
+:root{color-scheme:dark;--bg:#090b10;--panel:#121620;--line:#252c39;--red:#ff343f;--muted:#9ba5b5;--text:#f4f6fa}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px system-ui,Arial,sans-serif}
+header{position:sticky;top:0;z-index:5;background:#090b10ee;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:15px}
+nav,.wrap{max-width:1050px;margin:auto}
+nav{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{font-size:23px;font-weight:900;letter-spacing:-1px}.logo span{color:var(--red)}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer;border:1px solid var(--line);background:#1a202c;color:white;padding:10px 13px;border-radius:10px}
+button:hover{border-color:var(--red)}
+.primary{background:var(--red);color:white;border-color:var(--red);font-weight:750}
+.wrap{padding:20px 15px 50px}
+.hero{padding:27px 0 20px}
+.hero h1{font-size:clamp(30px,7vw,48px);line-height:1.1;margin:8px 0}
+.hero p,.muted{color:var(--muted)}
+.search{display:flex;gap:8px;margin:20px 0}
+input,select,textarea{background:var(--panel);color:white;border:1px solid var(--line);border-radius:10px;padding:12px;width:100%;min-width:0}
+.categories{display:flex;gap:8px;overflow:auto;padding:4px 0 17px}
+.categories button{white-space:nowrap}
+.categories .active{background:var(--red);border-color:var(--red)}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px}
+.app{border:1px solid var(--line);background:var(--panel);border-radius:15px;padding:14px;min-width:0}
+.appicon{height:62px;width:62px;border-radius:16px;display:grid;place-items:center;background:#29202a;font-size:30px;margin-bottom:12px}
+.app h3{font-size:16px;margin:4px 0;overflow-wrap:anywhere}
+.app p{font-size:12px;color:var(--muted);min-height:31px}
+.meta{font-size:12px;color:#c6ceda;margin:8px 0}
+.actions{display:flex;gap:7px;flex-wrap:wrap}
+.actions button{flex:1;font-size:12px;padding:9px 5px}
+.empty{padding:35px 10px;text-align:center;color:var(--muted)}
+.panel{border:1px solid var(--line);background:var(--panel);border-radius:15px;padding:17px;margin-top:18px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:25px}
+dialog{width:min(520px,calc(100% - 24px));max-height:88vh;overflow:auto;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:18px;padding:20px}
+dialog::backdrop{background:#000b}
+.detailicon{font-size:46px}
+.stars{color:#ffca55;letter-spacing:2px}
+.review{border-top:1px solid var(--line);padding:12px 0;overflow-wrap:anywhere}
+label{display:block;font-size:13px;margin:12px 0 6px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}.hero{padding-top:45px}}
+</style>
 </head>
 <body>
-
 <header>
-  <a href="#top" class="brand">
-    <img href="logo.jpg" alt="Demon Studio logo">
-    <span class="brand-name">DEMON <span>STUDIO</span></span>
-  </a>
-  <nav>
-    <div class="nav-links">
-      <a href="#library">Mods</a>
-      <a href="#library">Addons</a>
-      <a href="#library">Shaders</a>
-      <a href="#devices">Devices</a>
-    </div>
-  </nav>
+<nav>
+<div class="logo">DEMON<span>STORE</span></div>
+<button onclick="showInfo()">About Store</button>
+</nav>
 </header>
 
-<section class="hero" id="top">
-  <div class="eyebrow">Bedrock Edition · Cross-Platform</div>
-  <h1>One download,<br><em>every device</em> you play on.</h1>
-  <p>Mods, addons, shaders and texture packs for Minecraft Bedrock — packaged once and verified to run identically on mobile, console and desktop.</p>
-  <div class="hero-actions">
-    <a href="#library" class="btn btn-primary">Browse the library</a>
-    <a href="#devices" class="btn btn-ghost">Check device support</a>
-  </div>
-
-  <div class="device-strip" id="devices">
-    <div class="device-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 18h6"/></svg><span>Android</span></div>
-    <div class="device-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="18" r="1"/></svg><span>iOS</span></div>
-    <div class="device-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="2" y="4" width="20" height="13" rx="1"/><path d="M8 21h8M12 17v4"/></svg><span>Windows</span></div>
-  </div>
+<main class="wrap">
+<section class="hero">
+<div style="color:var(--red);font-weight:800">YOUR DIGITAL WORLD</div>
+<h1>Discover your next<br>favorite app.</h1>
+<p>Explore apps, tools and software from DemonStore.</p>
 </section>
 
-<section class="controls" id="library">
-  <div class="controls-row">
-    <div class="search-wrap">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-      <input id="search" type="text" placeholder="Search mods, addons, shaders…">
-    </div>
-    <div class="tabs" id="tabs">
-      <button class="tab active" data-cat="all">All</button>
-      <button class="tab" data-cat="mod">Mods</button>
-      <button class="tab" data-cat="addon">Addons</button>
-      <button class="tab" data-cat="shader">Shaders</button>
-      <button class="tab" data-cat="texture">Texture Packs</button>
-    </div>
-  </div>
-  <div class="device-filters" id="deviceFilters"></div>
-  <div class="result-count" id="resultCount"></div>
+<div class="search">
+<input id="search" placeholder="Search apps..." oninput="render()">
+<button onclick="document.getElementById('search').value='';render()">Clear</button>
+</div>
+
+<div class="categories" id="categories"></div>
+<div class="sectionhead">
+<h2 id="heading" style="margin:0">All applications</h2>
+<span id="count" class="muted"></span>
+</div>
+<div class="grid" id="grid"></div>
+<div id="empty" class="empty" hidden>No apps found. Check your search or catalogue.</div>
+
+<section class="panel">
+<h3>Submit a review</h3>
+<p class="muted">Reviews entered here are saved on this device only. They are not automatically published to other visitors.</p>
+<label for="reviewApp">Application</label>
+<select id="reviewApp"></select>
+<label for="reviewName">Your display name</label>
+<input id="reviewName" maxlength="40" placeholder="Name">
+<label for="reviewRating">Your rating</label>
+<select id="reviewRating">
+<option value="5">★★★★★ — 5 stars</option>
+<option value="4">★★★★ — 4 stars</option>
+<option value="3">★★★ — 3 stars</option>
+<option value="2">★★ — 2 stars</option>
+<option value="1">★ — 1 star</option>
+</select>
+<label for="reviewText">Comment (optional)</label>
+<textarea id="reviewText" maxlength="500" rows="3" placeholder="Write your feedback..."></textarea>
+<button class="primary" onclick="submitReview()">Submit review</button>
+<div id="reviews"></div>
 </section>
-  <section>
-    <link href="https://elementarywhole.com/sLXTlg"></link>
-  </section>
+<footer>DemonStore · Community apps and downloads<br>Download only files you trust.</footer>
+</main>
 
-<section class="grid" id="grid"></section>
+<dialog id="details">
+<button style="float:right" onclick="closeDetails()">✕</button>
+<div id="detailContent"></div>
+</dialog>
 
-<footer>
-  <span class="brand-name" style="font-family:'Graduate';">DEMON <span style="color:var(--ember)">STUDIO</span></span>
-  <span>All packages built for Bedrock Engine 1.21+ · Verified on-device before listing</span>
-  
-</footer>
+<script>
+/*
+  Add or edit apps in this catalogue.
+  File paths are relative to this index.html.
+  Example: apps/demon-writer.apk
+*/
+const apps = [
+ {id:"writer",name:"Demon Writer",icon:"📝",category:"Productivity",version:"1.0.0",rating:4.8,size:"APK",description:"A writing and notes app for your daily ideas.",file:"apps/demon-writer.apk"},
+ {id:"tools",name:"Demon Tools",icon:"🛠️",category:"Utilities",version:"1.0.0",rating:4.6,size:"ZIP",description:"A collection of useful tools and utilities.",file:"apps/demon-tools.zip"},
+ {id:"calculator",name:"Demon Calculator",icon:"🧮",category:"Utilities",version:"1.0.0",rating:4.9,size:"HTML",description:"A lightweight calculator that runs in your browser.",file:"apps/calculator.html"}
+];
+const categories=["All","Productivity","Utilities","Games","Education","Other"];
+let selectedCategory="All";
+let activeApp=null;
 
-<script src="script.js"></script>
+function safe(s){
+ return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function validFile(path){
+ return typeof path==="string" && !path.startsWith("/") &&
+   !path.includes("..") && /^apps\/[a-zA-Z0-9_. -]+$/.test(path);
+}
+function getReviews(){
+ try{return JSON.parse(localStorage.getItem("demonstore_reviews")||"[]")}
+ catch{return []}
+}
+function renderCategories(){
+ document.getElementById("categories").innerHTML=categories.map(c=>
+ `<button class="${selectedCategory===c?"active":""}" onclick="setCategory('${c}')">${safe(c)}</button>`
+ ).join("");
+}
+function setCategory(c){selectedCategory=c;render()}
+function render(){
+ renderCategories();
+ const q=document.getElementById("search").value.toLowerCase().trim();
+ const list=apps.filter(a=>
+ (selectedCategory==="All"||a.category===selectedCategory)&&
+ (a.name+" "+a.description+" "+a.category).toLowerCase().includes(q)
+ );
+ document.getElementById("heading").textContent=selectedCategory==="All"?"All applications":selectedCategory;
+ document.getElementById("count").textContent=list.length+" apps";
+ document.getElementById("empty").hidden=list.length!==0;
+ document.getElementById("grid").innerHTML=list.map(a=>`
+ <article class="app">
+ <div class="appicon">${safe(a.icon)}</div>
+ <h3>${safe(a.name)}</h3>
+ <div class="meta">${safe(a.category)} · v${safe(a.version)}</div>
+ <div class="stars">★ ${Number(a.rating).toFixed(1)} <span style="color:var(--muted)">/ 5</span></div>
+ <p>${safe(a.description)}</p>
+ <div class="actions">
+ <button onclick="openDetails('${safe(a.id)}')">Details</button>
+ <button class="primary" onclick="downloadApp('${safe(a.id)}')">Download</button>
+ </div></article>`).join("");
+ const sel=document.getElementById("reviewApp");
+ const old=sel.value;
+ sel.innerHTML=apps.map(a=>`<option value="${safe(a.id)}">${safe(a.name)}</option>`).join("");
+ if(apps.some(a=>a.id===old))sel.value=old;
+ renderReviews();
+}
+function downloadApp(id){
+ const a=apps.find(x=>x.id===id);
+ if(!a)return;
+ if(!validFile(a.file)){
+ alert("Invalid app file path. Check the catalogue.");return;
+ }
+ const link=document.createElement("a");
+ link.href=a.file;
+ link.download=a.file.split("/").pop();
+ document.body.appendChild(link);
+ link.click();
+ link.remove();
+}
+function openDetails(id){
+ activeApp=apps.find(a=>a.id===id);
+ if(!activeApp)return;
+ const a=activeApp;
+ document.getElementById("detailContent").innerHTML=`
+ <div class="detailicon">${safe(a.icon)}</div>
+ <h2>${safe(a.name)}</h2>
+ <div class="stars">★ ${Number(a.rating).toFixed(1)} / 5</div>
+ <p class="muted">${safe(a.category)} · Version ${safe(a.version)} · ${safe(a.size)}</p>
+ <p>${safe(a.description)}</p>
+ <p class="muted">Preset rating supplied by the store administrator; it is not calculated from community reviews.</p>
+ <button class="primary" onclick="downloadApp('${safe(a.id)}')">Download app</button>
+ <h3>Reviews on this device</h3>
+ <div id="detailReviews"></div>`;
+ document.getElementById("details").showModal();
+ const own=getReviews().filter(r=>r.appId===a.id);
+ document.getElementById("detailReviews").innerHTML=own.length?own.map(reviewHTML).join(""):"<p class='muted'>No local reviews yet.</p>";
+}
+function closeDetails(){document.getElementById("details").close()}
+function submitReview(){
+ const appId=document.getElementById("reviewApp").value;
+ const name=document.getElementById("reviewName").value.trim();
+ const comment=document.getElementById("reviewText").value.trim();
+ const rating=Number(document.getElementById("reviewRating").value);
+ if(!apps.some(a=>a.id===appId)){alert("Choose an app.");return}
+ if(!name){alert("Enter a display name.");return}
+ const all=getReviews();
+ all.unshift({appId,name:name.slice(0,40),comment:comment.slice(0,500),rating,date:new Date().toISOString()});
+ try{localStorage.setItem("demonstore_reviews",JSON.stringify(all.slice(0,300)))}
+ catch{alert("Could not save the review on this device.");return}
+ document.getElementById("reviewText").value="";
+ renderReviews();
+ alert("Review saved on this device.");
+}
+function reviewHTML(r){
+ return `<div class="review"><b>${safe(r.name)}</b> <span class="stars">${"★".repeat(Math.max(1,Math.min(5,Number(r.rating)||1)))}</span><p>${safe(r.comment||"No comment.")}</p><small class="muted">${safe(new Date(r.date).toLocaleDateString())}</small></div>`;
+}
+function renderReviews(){
+ const all=getReviews();
+ document.getElementById("reviews").innerHTML=all.length?
+ "<h4>Recent reviews on this device</h4>"+all.slice(0,10).map(reviewHTML).join(""):"";
+}
+function showInfo(){
+ alert("DemonStore is a static app catalogue. Downloads are served from the apps folder. Ratings are preset, and reviews are stored locally on this device.");
+}
+render();
+</script>
 </body>
 </html>
